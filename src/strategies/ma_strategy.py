@@ -5,7 +5,7 @@ class MAStrategy(bt.Strategy):
         ('fast_ma', 10),
         ('slow_ma', 30),
         ('rsi_period', 14),
-        ('rsi_low', 30),
+        ('rsi_low', 20),
         ('rsi_high', 70),
     )
 
