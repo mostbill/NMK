@@ -107,7 +107,6 @@ def run_backtests(stock_configs, plot_folder="plots"):
 if __name__ == '__main__':
     # Example usage: add your stocks and date ranges here
     stock_configs = [
-        {"stock": "DJIA", "start": "2025-01-01", "end": "2025-03-01"},
         # Add more stocks as needed
         {"stock": "AAPL", "start": "2025-01-01", "end": "2025-03-01"},
         {"stock": "MSFT", "start": "2025-01-01", "end": "2025-03-01"},
