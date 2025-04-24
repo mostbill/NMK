@@ -65,11 +65,11 @@ def run_backtests(stock_configs, plot_folder="plots"):
 
         # Calculate Sharpe Ratio and Max Drawdown
         import numpy as np
-        returns = df['close'].pct_change().dropna()
+        returns = np.array([final_value / initial_cash - 1])
         rf = 0.0  # Risk-free rate
-        sharpe_ratio = (returns.mean() - rf) / returns.std() * np.sqrt(252)
-        cum_returns = (1 + returns).cumprod()
-        rolling_max = cum_returns.cummax()
+        sharpe_ratio = (returns.mean() - rf) / returns.std() * np.sqrt(252) if returns.std() != 0 else 0
+        cum_returns = np.cumprod(1 + returns)
+        rolling_max = np.maximum.accumulate(cum_returns)
         drawdown = (cum_returns - rolling_max) / rolling_max
         max_drawdown = drawdown.min()
         print('Sharpe Ratio: %.4f' % sharpe_ratio)
@@ -109,18 +109,18 @@ if __name__ == '__main__':
     stock_configs = [
         # Add more stocks as needed
         {"stock": "AAPL", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "MSFT", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "TSLA", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "AMZN", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "GOOG", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "META", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "NVDA", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "BRK-B", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "JNJ", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "PG", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "UNH", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "V", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "XOM", "start": "2025-01-01", "end": "2025-03-01"},
-        {"stock": "CVX", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "MSFT", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "TSLA", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "AMZN", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "GOOG", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "META", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "NVDA", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "BRK-B", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "JNJ", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "PG", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "UNH", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "V", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "XOM", "start": "2025-01-01", "end": "2025-03-01"},
+        # {"stock": "CVX", "start": "2025-01-01", "end": "2025-03-01"},
     ]
     run_backtests(stock_configs)
