@@ -67,7 +67,7 @@ def run_backtests(stock_configs, plot_folder="plots"):
         import numpy as np
         returns = np.array([final_value / initial_cash - 1])
         rf = 0.0  # Risk-free rate
-        sharpe_ratio = (returns.mean() - rf) / returns.std() * np.sqrt(252) if returns.std() != 0 else 0
+        sharpe_ratio = (returns.mean() - rf) / returns.std() * np.sqrt(252)
         cum_returns = np.cumprod(1 + returns)
         rolling_max = np.maximum.accumulate(cum_returns)
         drawdown = (cum_returns - rolling_max) / rolling_max
@@ -106,21 +106,23 @@ def run_backtests(stock_configs, plot_folder="plots"):
 
 if __name__ == '__main__':
     # Example usage: add your stocks and date ranges here
+    # Set global start and end dates for all stocks
+    start_date = "2024-06-01"
+    end_date = "2025-04-01"
     stock_configs = [
-        # Add more stocks as needed
-        {"stock": "AAPL", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "MSFT", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "TSLA", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "AMZN", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "GOOG", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "META", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "NVDA", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "BRK-B", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "JNJ", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "PG", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "UNH", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "V", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "XOM", "start": "2025-01-01", "end": "2025-03-01"},
-        # {"stock": "CVX", "start": "2025-01-01", "end": "2025-03-01"},
+        {"stock": "AAPL", "start": start_date, "end": end_date},
+        # {"stock": "MSFT", "start": start_date, "end": end_date},
+        # {"stock": "TSLA", "start": start_date, "end": end_date},
+        # {"stock": "AMZN", "start": start_date, "end": end_date},
+        # {"stock": "GOOG", "start": start_date, "end": end_date},
+        # {"stock": "META", "start": start_date, "end": end_date},
+        # {"stock": "NVDA", "start": start_date, "end": end_date},
+        # {"stock": "BRK-B", "start": start_date, "end": end_date},
+        # {"stock": "JNJ", "start": start_date, "end": end_date},
+        # {"stock": "PG", "start": start_date, "end": end_date},
+        # {"stock": "UNH", "start": start_date, "end": end_date},
+        # {"stock": "V", "start": start_date, "end": end_date},
+        # {"stock": "XOM", "start": start_date, "end": end_date},
+        # {"stock": "CVX", "start": start_date, "end": end_date},
     ]
     run_backtests(stock_configs)

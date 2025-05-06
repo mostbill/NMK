@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backtest Web App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Stock Backtest Web App</h1>
+    <form method="POST" enctype="multipart/form-data" class="mb-4">
+        <div class="row mb-3">
+            <div class="col">
+                <label for="stock" class="form-label">Stock Symbol</label>
+                <input type="text" class="form-control" id="stock" name="stock" required placeholder="e.g. AAPL">
+            </div>
+            <div class="col">
+                <label for="start" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="start" name="start" required>
+            </div>
+            <div class="col">
+                <label for="end" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="end" name="end" required>
+            </div>
+            <div class="col">
+                <label for="strategy" class="form-label">Strategy</label>
+                <select class="form-select" id="strategy" name="strategy" required>
+                    {% for s in strategies %}
+                        <option value="{{ s }}">{{ s }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Run Backtest</button>
+    </form>
+    {% if result %}
+    <div class="card mb-4">
+        <div class="card-header">Backtest Results</div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Stock:</strong> {{ result.stock }}</li>
+                <li class="list-group-item"><strong>Start:</strong> {{ result.start }}</li>
+                <li class="list-group-item"><strong>End:</strong> {{ result.end }}</li>
+                <li class="list-group-item"><strong>Final Portfolio Value:</strong> ${{ '%.2f'|format(result.final_portfolio_value) }}</li>
+                <li class="list-group-item"><strong>Buy &amp; Hold Value:</strong> ${{ '%.2f'|format(result.buy_and_hold_value) }}</li>
+                <li class="list-group-item"><strong>Sharpe Ratio:</strong> {{ '%.4f'|format(result.sharpe_ratio) }}</li>
+                <li class="list-group-item"><strong>Max Drawdown:</strong> {{ '%.2f'|format(result.max_drawdown * 100) }}%</li>
+            </ul>
+        </div>
+    </div>
+    {% if plot_url %}
+    <div class="mb-4">
+        <h5>Performance Plot</h5>
+        <img src="{{ plot_url }}" alt="Backtest Plot" class="img-fluid" style="max-width: 100%; height: auto;">
+        <div class="mt-2">
+            <a href="{{ plot_url }}" download class="btn btn-outline-secondary">Download Plot</a>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+</body>
+</html>
